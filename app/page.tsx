@@ -3,11 +3,7 @@
 import { SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import Navbar from "@/components/general/navbar";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-export default function Layout({ children }: LayoutProps) {
+const Home = () => {
   const { isSignedIn } = useUser();
 
   return (
@@ -20,7 +16,6 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       <main className="flex-grow container mx-auto p-8 sm:p-16 grid gap-8">
-        {children}
       </main>
 
       <footer className="bg-gray-800 text-white text-center py-4">
@@ -28,4 +23,6 @@ export default function Layout({ children }: LayoutProps) {
       </footer>
     </div>
   );
-}
+};
+
+export default Home;
