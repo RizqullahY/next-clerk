@@ -11,10 +11,10 @@ export default function PostsPage() {
     try {
       const response = await fetch("/api/posts");
       const data = await response.json();
-      setPosts(data.data || []); // Pastikan data adalah array atau default kosong
+      setPosts(data.data || []); 
     } catch (error) {
       console.error("Failed to fetch posts:", error);
-      setPosts([]); // Set posts ke array kosong jika terjadi error
+      setPosts([]); 
     }
   };
 

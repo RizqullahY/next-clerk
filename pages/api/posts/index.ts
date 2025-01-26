@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
+import mongoose from "mongoose";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("Request received");
+
   await dbConnect();
 
   if (req.method === "GET") {
@@ -18,10 +21,12 @@ export default async function handler(
   } else if (req.method === "POST") {
     try {
       const { title, content } = req.body;
+      // console.log("Received user ID:", user);
 
-      if (!title || !content) {
-        return res.status(400).json({ error: "Title and content are required." });
-      }
+      // // Tidak perlu memvalidasi ObjectId lagi karena sekarang user berupa string
+      // if (!user) {
+      //   return res.status(400).json({ error: "User ID is required." });
+      // }
 
       const newPost = new Post({
         title,
@@ -31,7 +36,8 @@ export default async function handler(
       const savedPost = await newPost.save();
       res.status(201).json({ data: savedPost });
     } catch (error) {
-      res.status(500).json({ error: "Failed to create post." });
+      console.error(error);  // Log error untuk debugging
+      res.status(500).json({ error: error });
     }
   } else {
     res.status(405).json({ error: "Method not allowed." });
