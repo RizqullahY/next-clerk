@@ -34,38 +34,46 @@ export default function PostsPage() {
   }, []);
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Posts</h1>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border p-2 mr-2"
-        />
-        <input
-          type="text"
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="border p-2 mr-2"
-        />
-        <button onClick={handleCreate} className="bg-blue-500 text-white px-4 py-2">
-          Create
-        </button>
+    <main>
+      <div className="p-4">
+        <h1 className="text-xl font-bold mb-4">Posts</h1>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="border p-2 mr-2"
+          />
+          <input
+            type="text"
+            placeholder="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="border p-2 mr-2"
+          />
+          <button
+            onClick={handleCreate}
+            className="bg-blue-500 text-white px-4 py-2"
+          >
+            Create
+          </button>
+        </div>
+        <ul>
+          {posts.map((post: any) => (
+            <li key={post._id} className="mb-2 border-b pb-2">
+              <h2 className="text-lg font-semibold">{post.title}</h2>
+              <p>{post.content}</p>
+              <button
+                onClick={() => handleDelete(post._id)}
+                className="text-red-500"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {posts.map((post: any) => (
-          <li key={post._id} className="mb-2 border-b pb-2">
-            <h2 className="text-lg font-semibold">{post.title}</h2>
-            <p>{post.content}</p>
-            <button onClick={() => handleDelete(post._id)} className="text-red-500">
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </main>
   );
 }

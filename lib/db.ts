@@ -1,43 +1,18 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGO_URI;
+const MONGODB_URI : any  = process.env.MONGO_URI as string;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGO_URI environment variable");
 }
 
-// Deklarasi tipe untuk properti global
-declare global {
-  namespace NodeJS {
-    interface Global {
-      mongoose: {
-        conn: mongoose.Connection | null;
-        promise: Promise<mongoose.Connection> | null;
-      };
-    }
-  }
-}
-
-// Inisialisasi global.mongoose
-globalThis.mongoose  = globalThis.mongoose || { conn: null, promise: null };
-
-export async function connectToDatabase() {
-  if (globalThis.mongoose.conn) {
-    return globalThis.mongoose.conn;
-  }
-
-  if (!globalThis.mongoose.promise) {
-    globalThis.mongoose.promise = mongoose
-      .connect(MONGODB_URI)
-      .then((mongoose) => mongoose.connection);
-  }
-
+const connectToDatabase = async () => {
   try {
-    globalThis.mongoose.conn = await globalThis.mongoose.promise;
+      await mongoose.connect(MONGODB_URI);
+      console.log("Connected to the db");
   } catch (err) {
-    console.error("Database connection error:", err);
-    throw new Error("Failed to connect to database");
+      console.error("Failed to connect to the db", err);
   }
+};
 
-  return globalThis.mongoose.conn;
-}
+export default connectToDatabase;
