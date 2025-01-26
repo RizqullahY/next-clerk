@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+interface Post {
+  _id: string;
+  title: string;
+  content: string;
+}
 export default function PostsPage() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([])
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -60,7 +64,7 @@ export default function PostsPage() {
           </button>
         </div>
         <ul>
-          {posts.map((post: any) => (
+          {posts.map((post: Post) => (
             <li key={post._id} className="mb-2 border-b pb-2">
               <h2 className="text-lg font-semibold">{post.title}</h2>
               <p>{post.content}</p>

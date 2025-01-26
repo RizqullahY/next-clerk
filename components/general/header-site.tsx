@@ -10,7 +10,7 @@ const HeaderSite = () => {
     <header className="shadow-md bg-gray-900 text-white">
       <div className="container mx-auto flex justify-between items-center px-4">
         <Navbar />
-        <div>
+        <div className="flex gap-x-5">
           <ModeToggle />
           {isSignedIn ? <UserButton /> : <SignUpButton />}
         </div>

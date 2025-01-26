@@ -15,8 +15,12 @@ export default async function handler(
       try {
         const posts = await Post.find({});
         res.status(200).json({ success: true, data: posts });
-      } catch (error: any) {
-        res.status(500).json({ success: false, error: error.message });
+      } catch (error: unknown) {  // Change here: use `unknown` to avoid `any`
+        if (error instanceof Error) {  // Check if error is an instance of `Error`
+          res.status(500).json({ success: false, error: error.message });
+        } else {
+          res.status(500).json({ success: false, error: "Unknown error occurred" });
+        }
       }
       break;
 
@@ -24,8 +28,12 @@ export default async function handler(
       try {
         const post = await Post.create(req.body);
         res.status(201).json({ success: true, data: post });
-      } catch (error: any) {
-        res.status(400).json({ success: false, error: error.message });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          res.status(400).json({ success: false, error: error.message });
+        } else {
+          res.status(400).json({ success: false, error: "Unknown error occurred" });
+        }
       }
       break;
 
@@ -38,8 +46,12 @@ export default async function handler(
             .status(404)
             .json({ success: false, error: "Post not found" });
         res.status(200).json({ success: true, data: post });
-      } catch (error: any) {
-        res.status(400).json({ success: false, error: error.message });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          res.status(400).json({ success: false, error: error.message });
+        } else {
+          res.status(400).json({ success: false, error: "Unknown error occurred" });
+        }
       }
       break;
 
@@ -52,8 +64,12 @@ export default async function handler(
             .status(404)
             .json({ success: false, error: "Post not found" });
         res.status(200).json({ success: true, data: deletedPost });
-      } catch (error: any) {
-        res.status(400).json({ success: false, error: error.message });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          res.status(400).json({ success: false, error: error.message });
+        } else {
+          res.status(400).json({ success: false, error: "Unknown error occurred" });
+        }
       }
       break;
 
